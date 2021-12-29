@@ -1,0 +1,49 @@
+<div class="d-sm-flex justify-content-between align-items-start">
+    <div>
+    <h4 class="card-title card-title-dash">User Managment</h4>
+    </div>
+    <div>
+    <a href="/admin/add1" class="btn btn-primary btn-lg text-white mb-0 me-0"><i class="mdi mdi-account-plus"></i>Add new member</a>
+    
+    </div>
+</div>
+<div class="table-responsive  mt-1">
+    <table class="table select-table">
+    <thead>
+        <tr>
+        <th>No.</th>
+        <th>User name</th>
+        <th>Role</th>
+        <th>Department</th>
+        <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+      {{#each members}}
+        <tr>
+          <td>{{ sum @index 1 }}</td>
+          <td>
+              <div class="d-flex ">
+              <img src="images/faces/face1.jpg" alt="">
+              <div>
+                  <h6>{{this.email}}</h6>
+                  <p>{{this.username}}</p>
+              </div>
+              </div>
+          </td>
+          <td>
+              <h6>{{ check_role this.role }}</h6>
+              <!-- <p>company type</p> -->
+          </td>
+          <td>
+              <h6>CNTT</h6>
+          </td>
+        <td>
+          <button type="button" class="btn btn-warning" style="color: white;">Edit</button>
+          <button type="button" class="btn btn-danger" style="color: white;">Delete</button>
+        </td>
+        </tr>
+        {{/each}}
+    </tbody>
+    </table>
+</div>

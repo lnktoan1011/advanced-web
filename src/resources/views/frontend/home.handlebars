@@ -1,0 +1,419 @@
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	
+	<div class="topbar stick">
+		<div class="logo">
+			<a title="" href="/member/home"><img src="/frontend/images/logo.png" alt=""></a>
+		</div>
+		
+		<div class="top-area">
+			<div class="user-img">
+				<img src="/frontend/images/resources/admin.jpg" alt="">
+				<span class="status f-online"></span>
+				<div class="user-setting">
+					<a href="#" title=""><span class="status f-online"></span>online</a>
+					<a href="#" title=""><span class="status f-away"></span>away</a>
+					<a href="#" title=""><span class="status f-off"></span>offline</a>
+					<a href="#" title=""><i class="ti-user"></i> view profile</a>
+					<a href="#" title=""><i class="ti-pencil-alt"></i>edit profile</a>
+					<a href="#" title=""><i class="ti-target"></i>activity log</a>
+					<a href="#" title=""><i class="ti-settings"></i>account setting</a>
+					<a href="/member/logout" title=""><i class="ti-power-off"></i>log out</a>
+				</div>
+			</div>
+		</div>
+	</div><!-- topbar -->
+		
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row" id="page-contents" style="padding:0">
+					<div class="col-lg-3" id="side-bar">
+						<aside class="sidebar static">
+							<div class="widget">
+								<h4 class="widget-title">Your page</h4>	
+								
+								<div class="your-page">
+									{{!-- <figure> --}}
+										{{#if member.avatar }}
+										<img src="/uploads/{{ member.avatar }}" alt="" style="width: 50%; border-radius: 20px">
+										{{else}}
+										<img src="/frontend/images/user-avatar.png" alt="" style="width: 50%; border-radius: 20px">
+										{{/if}}
+									{{!-- </figure> --}}
+									<br>
+									<div class="page-meta">
+										<a href="#" title="" class="underline">
+											{{#if member  }}
+												{{ member.username }}
+											{{/if}}
+										</a>
+									</div>
+								</div>
+								<div class="widget"></div>
+								<ul class="naves">
+									<li>
+										<i class="ti-clipboard"></i>
+										<a href="#" >My page</a>
+									</li>
+		
+									
+									<li>
+										<i class="ti-bell"></i>
+										<a href="#" title="">Notifications</a>
+									</li>
+									
+									<li>
+										<i class="ti-power-off"></i>
+										<a href="/member/logout" title="">Logout</a>
+									</li>
+								</ul>
+							</div>
+							<!-- Shortcuts -->
+							<div class="widget">
+								<div class="row">
+									<div class="col-sm-7">
+										<h4 class="widget-title">Department</h4>
+									</div>
+									<div class="col-sm-5" style="padding: 15px 30px 0px; color: #088dcd">
+										<a href="/member/departments/list" title="" class="underline">View all</a>
+									</div>
+								</div>
+								<ul class="list-group">
+									{{#each departments}}
+									<li class="list-group-item d-flex justify-content-between align-items-center">
+										<a href="/member/departments/{{ this._id }}">
+										{{ this.name }}
+										</a>
+										<span class="badge badge-primary badge-pill">{{ this.notifications.length }}</span>
+									</li>
+									{{/each  }}
+								</ul>
+							</div><!-- friends list sidebar -->
+							
+							
+						</aside>
+					</div><!-- sidebar -->
+					<div class="col-lg-6">
+						<div class="central-meta" id ="new-post-block" style="padding: 10px;">
+							
+							<div class="new-postbox">
+								<div class="row" >
+									<div class="col-lg-2 mx-0">
+										<figure style="text-align: center; margin-bottom: 5px; ">
+											{{#if member.avatar }}
+											<img src="/uploads/{{ member.avatar }}" alt="" class="rounded-circle" style="width: 70%">
+											{{else}}
+											<img src="/frontend/images/user-avatar.png" alt="" class="rounded-circle" style="width: 70%">
+											{{/if}}
+										</figure>
+									</div>
+									<div class="col-lg-10 mx-0">
+										<div class="row mt-2" id="row-status" >
+											<button type="button" class="btn btn-secondary btn-block create_post" id="status-block">Hi, what are you thinking today?</button>
+										</div>
+										
+									</div>
+								</div>
+								<hr style="margin: 0px 0px 10px 0px;">
+								<div class="row">
+									<div class="col-sm-4">
+										<button type="button" class="btn btn-light create_post" id="icon-block"><i class="fab fa-youtube"></i> Video</button>
+									</div>
+									<div class="col-sm-4">
+										<button type="button" class="btn btn-light create_post" id="icon-block"><i class="fas fa-image"></i> Image</button>
+									</div>
+									<div class="col-sm-4">
+										<button type="button" class="btn btn-light create_post" id="icon-block"><i class="far fa-smile"></i> Status</button>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+					
+						<!-- start modal post -->
+						<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="newPostLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									
+									<div class="modal-header">
+										<h5 class="modal-title">Create post</h5>
+									</div>
+									<div class="btn-close">
+										<button type="button" id="close" class="btn btn-light" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">X</span>
+										</button>
+									</div>
+									<form id="postForm" enctype="multipart/form-data">
+										<div class="modal-body">
+											<div class="friend-info">
+												<figure>
+													{{#if member.avatar }}
+													<img src="/uploads/{{ member.avatar }}" alt="">
+													{{else}}
+													<img src="/frontend/images/user-avatar.png" alt="">
+													{{/if}}
+												</figure>
+												<div class="friend-name">
+													
+													<ins><a href="time-line.html" title="">
+														{{#if member  }}
+															{{ member.username }}
+														{{/if}}
+													</a></ins>
+													<span>Public</span>
+												</div>
+												<textarea id="post_content" name="content" rows="3" placeholder="Hi, what are you thinking today?"></textarea>
+												<div class="post-upload" id="option">
+												
+												</div>
+											</div>
+
+											<div id="addToPost">
+												<label for="upload-image" id="lable-add">
+													<p> Add to your post </p>
+												</label>
+												<input type="file" id="upload-image" name="image" style="display:none">
+												<div> 
+													<label for="upload-image" id="icon-label">
+														<i class="fas fa-image m-2"></i>
+													</label>	
+													
+													<label class="video-btn" id="icon-label">
+														<i class="fab fa-youtube m-2"></i>
+													</label>
+													<label for="upload" id="icon-label" >
+													<i class="far fa-smile m-2"></i>
+													</label>
+												</div> 
+											</div>
+												
+										</div>
+										<div class="modal-footer">
+											<input type="hidden" name="post_id" id="post_id" value="">
+											<button type="submit" class="btn btn-primary" id="bt-post" disabled >Post</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- end modal post -->
+					
+						<!-- start modal delete-->
+						<div class="modal" id="confirmDeletePost" tabindex="-1" role="dialog">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">Delete Post</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p>Are you sure to delete this post.</p>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-primary btn_delete_post">Delete</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								</div>
+								</div>
+							</div>
+						</div>
+						<!-- end modal delete-->
+
+
+						<!-- add post new box -->
+						<div class="loadMore">
+									
+							{{#each posts}}
+							
+							<div class="central-meta item" id="post-item{{ this._id }}" style="padding: 25px 25px 0 25px;">
+								
+								<div class="user-post">
+									
+									<div class="friend-info" style=" display: inline-block;">
+										{{#if_eq ../member._id this.user._id }}
+										<div class="edit-menu dropleft">
+											<button type="button" id="btn-edit-menu" class="btn btn-light dropdown-toggle-" data-toggle="dropdown" aria-expanded="false">
+												<i class="fas fa-ellipsis-h"></i>
+											</button>
+
+											{{!-- edit dropdown --}}
+											<div class="dropdown-menu" aria-labelledby="btn-edit-menu" >
+												
+												<a class="dropdown-item edit_post" href="javascript:void(0);" data-id="{{ ../this._id }}">Edit</a>
+												<a class="dropdown-item delete_post" href="javascript:void(0);" data-id="{{ ../this._id }}">Delete</a>
+												
+											</div>
+										</div>
+										{{/if_eq}}
+										
+										<figure>
+											{{#if this.user.avatar }}
+											<img src="/uploads/{{ this.user.avatar }}" alt="">
+											{{else}}
+											<img src="/frontend/images/user-avatar.png" alt="">
+											{{/if}}
+										</figure>
+										<div class="friend-name">
+											<ins><a href="time-line.html" title="">{{ this.user.username }}</a></ins>
+											<span>published: {{ formatDate this.createdAt }}</span>
+										</div>
+										<div class="description">
+											<p>{{ this.content }}</p>
+										</div>
+										<div class="post-meta">
+											{{#if this.image}}
+												<img src="/uploads/{{ this.image }}" height="315" alt="">
+											{{/if}}
+											{{#if this.video}}
+												<iframe src="https://www.youtube.com/embed/{{ getYoutubeId this.video }}" height="315" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+											{{/if}}
+											<div class="we-video-info">
+												<div class="row" >
+													<div class="col-md-6">
+														<button type="button" class="btn btn-light " id="icon-block">
+															<span class="like" data-toggle="tooltip" title="like">
+																<a href="javascript:void(0)" class="total_like bt-like like-post{{ this._id }}" data-post-id="{{ this._id }}" data-like-id="{{data_like this.likes ../member._id}}"><i class="far fa-thumbs-up like-post-icon{{ this._id }} {{liked this.likes ../member._id}}" {{{ style_liked this.likes ../member._id }}}> Like</i></a>
+																<ins class="count-like{{ this._id }}" >{{ this.likes.length }} Like</ins> 
+															</span>
+														</button>
+													</div>
+													<div class="col-md-6">
+														<button type="button" class="btn btn-light " id="icon-block">
+															<span class="comment" data-toggle="tooltip" title="Comments">
+																<i class="far fa-comment"> Comments</i>
+																<ins class="count-comment{{ this._id }}">{{ this.comments.length }} Comments</ins> 
+															</span>
+														</button>
+													</div>
+												</div>
+												{{!-- <ul>
+													<li>
+														<span class="like" data-toggle="tooltip" title="like">
+															<a href="javascript:void(0)" class="total_like bt-like like-post{{ this._id }}" data-post-id="{{ this._id }}" data-like-id="{{data_like this.likes ../member._id}}"><i class="far fa-thumbs-up like-post-icon{{ this._id }} {{liked this.likes ../member._id}}"></i></a>
+															<ins class="count-like{{ this._id }}" >{{ this.likes.length }}</ins>
+														</span>
+													</li>
+													<li>
+														<span class="comment" data-toggle="tooltip" title="Comments">
+															<i class="far fa-comment"></i>
+															<ins class="count-comment{{ this._id }}">{{ this.comments.length }}</ins>
+														</span>
+													</li>
+												</ul> --}}
+											</div>
+											
+										</div>
+									</div>
+									<div class="coment-area">
+										<ul class="we-comet">
+											
+											{{#each this.comments}}
+											<li id="comment{{ this._id }}">
+												<div class="comet-avatar">
+													{{#if this.user.avatar }}
+													<img src="/uploads/{{ this.user.avatar }}" alt="">
+													{{else}}
+													<img src="/frontend/images/user-avatar.png" alt="">
+													{{/if}}
+												</div>
+												<div class="we-comment">
+													<div class="coment-head">
+														<h5><a href="time-line.html" title="">{{ this.user.username }}</a></h5>
+														<span>{{ formatDate this.updatedAt }}</span>
+														{{#if_eq ../../member._id this.user._id }}
+														<div class="edit-menu dropleft">
+															<button type="button" id="btn-edit-menu" class="btn btn-light dropdown-toggle-" data-toggle="dropdown" aria-expanded="false">
+																<i class="fas fa-ellipsis-h"></i>
+															</button>
+
+															{{!-- edit dropdown --}}
+															<div class="dropdown-menu" aria-labelledby="btn-edit-menu" >
+																<a class="dropdown-item delete_comment" href="javascript:void(0);" data-id="{{ ../this._id }}">Delete</a>
+																
+															</div>
+														</div>
+														{{/if_eq}}
+													</div>
+													<p>{{ this.comment }}</p>
+												</div>
+											</li>
+											{{/each }}
+											
+											<li class="post-comment">
+												<div class="comet-avatar">
+													{{#if this.user.avatar }}
+													<img src="/uploads/{{ this.user.avatar }}" alt="">
+													{{else}}
+													<img src="/frontend/images/user-avatar.png" alt="">
+													{{/if}}
+												</div>
+												<div class="post-comt-box">
+													<form name="frm-comment" action="" method="post" class="frm-post-comment" id="frm-post{{ this._id }}">
+														<textarea placeholder="Post your comment" class="inputComment" name="comment"></textarea>
+														<input type="hidden" name="post_id" value="{{ this._id }}" />
+													</form>	
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							{{/each}}
+						
+							{{!-- <div class="central-meta item loadingPost" id="load" style="display: none;"> --}}
+								{{!-- <div id="checkLoad"> --}}
+								{{!-- <div class="header-post">
+									<div class="space-img"></div>
+									<div class="space-friend-name">
+										<div class="space-name"></div>
+										<div class="space-span"></div>	
+									</div>
+								</div>
+								<div class="body-post">
+									<div class="space"></div>
+									<div class="space"></div>
+								</div> --}}
+								{{!-- </div> --}}
+							
+							{{!-- </div> --}}
+						</div>
+						{{!-- <div>
+							<button type="button" class="btn btn-primary" id="btn-loadMore">Load More</button>
+						</div> --}}
+					</div><!-- centerl meta -->
+					<div class="col-lg-3" id="side-bar">
+						<aside class="sidebar static">
+							<div class="widget">
+								<div class="row">
+									<div class="col-sm-7">
+										<h4 class="widget-title">Recent Notifications</h4>
+									</div>
+									<div class="col-sm-5" style="padding: 15px 30px 0px; color: #088dcd">
+										<a href="#" title="" class="underline">View all</a>
+									</div>
+								</div>
+								<ul class="activitiez">
+									{{#each notifications}}
+									<li>
+										<div class="activity-meta">
+											<i>{{ formatDate this.createdAt }}</i>
+											<span ><a  href="/member/departments/{{ this.department._id }}/notification/{{ this._id }}/detail" title="" id="noti-name">{{this.title}} </a></span>
+											<h6>by <a href="/member/departments/{{ this.department._id }}">{{ this.department.name }}.</a></h6>
+										</div>
+									</li>
+									{{/each}}
+								</ul>
+							</div>
+						</aside>
+					</div><!-- sidebar -->
+				</div>
+			</div>
+		</div>	
+	</section>
+</div>	
+	
+	<script src="/frontend/js/main.min.js"></script>
+	<script src="/frontend/js/main.js"></script> 
