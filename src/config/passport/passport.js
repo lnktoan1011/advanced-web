@@ -71,7 +71,7 @@ passport.use('local.login',new LocalStrategy({
 passport.use(new GoogleStrategy({
   clientID:     '1030080015854-snr9og0v8cpjvc25ab5ngtapm9p3jgag.apps.googleusercontent.com',
   clientSecret: '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',
-  callbackURL: "http://localhost:3000/member/auth/google/callback",
+  callbackURL: "https://advanced-web.herokuapp.com/member/auth/google/callback",
   passReqToCallback   : true
 },
 function(request, accessToken, refreshToken, profile, done) {
