@@ -7,14 +7,24 @@ const multer  = require('multer')
 
 // const upload = multer({ dest: './src/public/uploads/' });
 
+const fs = require('fs');
+
+
 var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, './src/public/uploads/')
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now())
-    }
-  })
+  destination: function (req, file, cb) {
+    const dir ='./src/public/uploads/'
+      fs.exists(dir, exist => {
+      if (!exist) {
+        return fs.mkdir(dir, error => cb(error, dir))
+      }
+      return cb(null, dir)
+      })
+    // cb(null, './src/public/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
    
   var upload = multer({ storage: storage })
 
